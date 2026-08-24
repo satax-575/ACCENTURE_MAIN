@@ -1,0 +1,10 @@
+{
+  "buildCommand": "cd kpi_engine/frontend && npm install && npm run build",
+  "outputDirectory": "kpi_engine/frontend/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
