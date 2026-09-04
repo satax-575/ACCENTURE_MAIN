@@ -1,0 +1,21 @@
+# Core backend
+pandas>=2.0
+PyYAML>=6.0
+fastapi>=0.110
+uvicorn>=0.29
+scipy>=1.11
+statsmodels>=0.14
+python-dotenv>=1.0
+requests>=2.31
+networkx>=3.0
+
+# Analytical database layer
+duckdb>=0.10
+
+# LLM providers — install the one(s) you use
+# Groq (free, fastest — RECOMMENDED): pip install groq
+# Anthropic Claude: pip install anthropic
+# Google Gemini:    pip install google-generativeai
+groq>=0.11
+anthropic>=0.34
+google-generativeai>=0.8

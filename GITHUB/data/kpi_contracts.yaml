@@ -1,0 +1,115 @@
+# KPI Semantic Contracts — Round 2
+# Governs: detection thresholds, driver weights, access control, column security,
+# action decision rights, constraints, and lineage. This is the single source of truth
+# consumed by detect.py, root_cause.py, access.py, recommend.py, knowledge_graph.py.
+
+Revenue:
+  formula: "SUM(qty * price)"
+  owner: "VP Sales"
+  drivers: ["Purchase Frequency", "Checkout Error Rate", "Marketing Spend", "AOV"]
+  threshold_pct: 5.0
+  business_weight: 1.0          # highest priority KPI
+  source: "transactions.csv"
+  refresh: "daily"
+  cadence_days: 1
+  lineage: "transactions -> daily region rollup -> SUM(qty * price)"
+  access: ["ceo", "manager", "analyst"]
+  column_security:
+    customer_id: ["analyst"]     # only analysts see customer IDs
+    price: ["ceo", "manager", "analyst"]
+    qty: ["ceo", "manager", "analyst"]
+  decision_rights:
+    escalate: ["manager", "ceo"]
+    approve_spend: ["ceo"]
+    tactical_action: ["manager"]
+  constraints:
+    budget_freeze: false
+
+Purchase Frequency:
+  formula: "COUNT(orders) / day"
+  owner: "VP Sales"
+  drivers: ["Checkout Error Rate", "Marketing Spend"]
+  threshold_pct: 5.0
+  business_weight: 0.8
+  source: "transactions.csv"
+  refresh: "daily"
+  cadence_days: 1
+  lineage: "transactions -> daily region rollup -> COUNT(orders)/day"
+  access: ["ceo", "manager", "analyst"]
+  column_security:
+    customer_id: ["analyst"]
+  decision_rights:
+    escalate: ["manager", "ceo"]
+    tactical_action: ["manager"]
+  constraints: {}
+
+Average Order Value:
+  formula: "SUM(qty * price) / COUNT(orders)"
+  owner: "VP Sales"
+  drivers: ["Product Mix"]
+  threshold_pct: 5.0
+  business_weight: 0.6
+  source: "transactions.csv"
+  refresh: "daily"
+  cadence_days: 1
+  lineage: "transactions -> daily region rollup -> SUM(qty*price)/COUNT(orders)"
+  access: ["ceo", "manager", "analyst"]
+  column_security:
+    customer_id: ["analyst"]
+  decision_rights:
+    escalate: ["manager", "ceo"]
+  constraints: {}
+
+Checkout Error Rate:
+  formula: "checkout_error tickets / orders"
+  owner: "Head of Engineering"
+  drivers: []
+  threshold_pct: 50.0
+  business_weight: 0.9           # high because it directly blocks revenue
+  source: "support_tickets.csv"
+  refresh: "irregular (event-level)"
+  cadence_days: 1
+  lineage: "support_tickets -> daily region rollup -> checkout_errors / orders"
+  access: ["ceo", "manager"]     # analysts cannot see error rate (scenario 5)
+  column_security: {}
+  decision_rights:
+    escalate: ["manager", "ceo"]
+    deploy_fix: ["ceo"]
+  constraints: {}
+
+Marketing Spend:
+  formula: "SUM(spend)"
+  owner: "Head of Marketing"
+  drivers: []
+  threshold_pct: 10.0
+  business_weight: 0.5
+  source: "marketing.csv"
+  refresh: "weekly"
+  cadence_days: 7
+  lineage: "marketing -> weekly region rollup -> SUM(spend)"
+  access: ["ceo", "analyst"]     # managers can't see marketing spend (domain-level security)
+  column_security:
+    spend: ["ceo"]               # only CEO sees exact spend figures
+    impressions: ["ceo", "analyst"]
+    clicks: ["ceo", "analyst"]
+  decision_rights:
+    reallocate_budget: ["ceo"]
+    pause_campaign: ["ceo"]
+  constraints:
+    budget_freeze: false
+
+Conversion Rate:
+  formula: "orders / clicks"
+  owner: "Head of Marketing"
+  drivers: ["Marketing Spend", "Checkout Error Rate"]
+  threshold_pct: 10.0
+  business_weight: 0.7
+  source: "transactions.csv + marketing.csv"
+  refresh: "weekly"
+  cadence_days: 7
+  lineage: "transactions (daily->weekly rollup) JOIN marketing (weekly) on week_start, region -> orders/clicks"
+  access: ["ceo", "analyst"]
+  column_security: {}
+  decision_rights:
+    escalate: ["ceo"]
+  constraints: {}

@@ -1,0 +1,67 @@
+[
+  {
+    "logged_at": "2026-08-26T14:17:35.697153+00:00",
+    "region": "East Region",
+    "week_start": "2026-08-10",
+    "metric": "orders",
+    "top_driver": "Checkout error rate",
+    "confidence_level": "HIGH",
+    "contribution_pct": 98,
+    "narrative_hash": "",
+    "drift_checked_at": "2026-08-26T14:22:09.469677+00:00",
+    "is_stale": false,
+    "stale_reason": null
+  },
+  {
+    "logged_at": "2026-08-26T14:20:16.931279+00:00",
+    "region": "North Region",
+    "week_start": "2026-08-18",
+    "metric": "revenue",
+    "top_driver": "Checkout error rate",
+    "confidence_level": "ABSTAIN",
+    "contribution_pct": 85,
+    "narrative_hash": "",
+    "drift_checked_at": "2026-08-26T14:22:09.469677+00:00",
+    "is_stale": false,
+    "stale_reason": null
+  },
+  {
+    "logged_at": "2026-08-26T14:21:07.765084+00:00",
+    "region": "North Region",
+    "week_start": "2026-08-17",
+    "metric": "orders",
+    "top_driver": "Checkout error rate",
+    "confidence_level": "ABSTAIN",
+    "contribution_pct": 84,
+    "narrative_hash": "",
+    "drift_checked_at": "2026-08-26T14:22:09.469677+00:00",
+    "is_stale": false,
+    "stale_reason": null
+  },
+  {
+    "logged_at": "2026-08-26T14:31:08.697946+00:00",
+    "region": "East Region",
+    "week_start": "2026-08-10",
+    "metric": "revenue",
+    "top_driver": "None",
+    "confidence_level": "N/A",
+    "contribution_pct": 0,
+    "narrative_hash": "",
+    "drift_checked_at": null,
+    "is_stale": false,
+    "stale_reason": null
+  },
+  {
+    "logged_at": "2026-08-27T13:42:56.389526+00:00",
+    "region": "East Region",
+    "week_start": "2026-08-11",
+    "metric": "revenue",
+    "top_driver": "Checkout error rate",
+    "confidence_level": "HIGH",
+    "contribution_pct": 97,
+    "narrative_hash": "",
+    "drift_checked_at": null,
+    "is_stale": false,
+    "stale_reason": null
+  }
+]
